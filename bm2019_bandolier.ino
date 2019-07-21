@@ -15,10 +15,12 @@ const size_t NUM_PIXELS = 50;
 Adafruit_WS2801 strip = Adafruit_WS2801(NUM_PIXELS, dataPin, clockPin);
 
 void setup() {
+  Serial.begin(115200);
   strip.begin();
   clear();
   pinMode(0, OUTPUT);
   pinMode(inputPin, INPUT);
+  meshSetup();
 }
 
 const int pause = 7000;
@@ -42,6 +44,8 @@ void loop() {
     rainbowCycle();
     wasPressed = false;
   }
+
+  meshLoop();
 }
 
 void clear() {
