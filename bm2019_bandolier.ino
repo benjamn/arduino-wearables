@@ -1,5 +1,5 @@
 #include "Adafruit_WS2801.h"
-#include "SPI.h" // Comment out this line if using Trinket or Gemma
+#include "SPI.h"
 #include <EEPROM.h>
 
 // Choose which 2 pins you will use for output.
@@ -8,20 +8,15 @@
 // BE SURE TO CHECK YOUR PIXELS TO SEE WHICH WIRES TO USE!
 uint8_t dataPin  = 4;    // Yellow wire on Adafruit Pixels
 uint8_t clockPin = 5;    // Green wire on Adafruit Pixels
-
-// Don't forget to connect the ground wire to Arduino ground,
-// and the +5V wire to a +5V supply
-
-// Set the first variable to the NUMBER of pixels. 25 = 25 pixels in a row
-Adafruit_WS2801 strip = Adafruit_WS2801(50, dataPin, clockPin);
-
 uint8_t inputPin = 14;
 
+// Elsewhere we always refer to the pixel count as strip.numPixels().
+const size_t NUM_PIXELS = 50;
+Adafruit_WS2801 strip = Adafruit_WS2801(NUM_PIXELS, dataPin, clockPin);
+
 void setup() {
-//  Serial.begin(9600);
   strip.begin();
-  clear(0);
-  strip.show();
+  clear();
   pinMode(0, OUTPUT);
   pinMode(inputPin, INPUT);
 }
@@ -37,41 +32,26 @@ bool wasPressed = false;
 void loop() {
   if (isButtonPressed()) {
     digitalWrite(0, LOW);
-    for (int i = 0; i < strip.numPixels(); i++) {
-      strip.setPixelColor(i, Color(0, 0, 0));
-    }
-    strip.show();
+    clear();
     wasPressed = true;
   } else {
     if (wasPressed) {
-      cycleDimness();
+      changeDimness();
     }
     digitalWrite(0, HIGH);
     rainbowCycle();
     wasPressed = false;
   }
-//  digitalWrite(0, digitalRead(inputPin));
 }
 
-void clear(int delayMs) {
+void clear() {
   for (int i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, Color(0, 0, 0));
   }
-
   strip.show();
-
-  delay(delayMs);
 }
 
 int j = 0;
-
-void rainbow(uint8_t wait) {
-  for (int i = 0; i < strip.numPixels(); i++) {
-    strip.setPixelColor(i, Wheel((i + j) % 256));
-  }  
-  strip.show();
-  j = (j + 1) % 256;
-}
 
 // Slightly different, this one makes the rainbow wheel equally distributed 
 // along the chain
@@ -92,7 +72,7 @@ int8_t dimnessFactors[] = {
 size_t dimnessIndex = 0;
 size_t dimnessCount = sizeof(dimnessFactors) / sizeof(dimnessFactors[0]);
 
-void cycleDimness() {
+void changeDimness() {
   dimnessIndex = (dimnessIndex + 1) % dimnessCount;
 }
 
