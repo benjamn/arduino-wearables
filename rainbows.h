@@ -22,5 +22,5 @@ uint32_t rainbows(AnimationState *state) {
   // For simplicity, we assume every bandolier has the same number of pixels (50).
   size_t allLedCount = state->ledCount * state->meshCount;
   size_t allLedIndex = state->ledCount * state->meshIndex + state->ledIndex;
-  return Wheel(((allLedIndex * 256 / allLedCount) + state->time / 32) % 256);
+  return Wheel(((allLedIndex * 256 / allLedCount) + state->time / 16) % 256);
 }
