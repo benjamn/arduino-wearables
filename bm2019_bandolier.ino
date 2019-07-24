@@ -5,7 +5,6 @@
 #include "common.h"
 #include "animate.h"
 #include "mesh.h"
-#include "utils.h"
 #include "rainbows.h"
 
 void setup() {
