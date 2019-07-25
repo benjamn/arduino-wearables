@@ -1,0 +1,15 @@
+[submodule "Libraries/ArduinoJson"]
+	path = Libraries/ArduinoJson
+	url = git@github.com:bblanchon/ArduinoJson.git
+[submodule "Libraries/painlessMesh"]
+	path = Libraries/painlessMesh
+	url = git@github.com:benjamn/painlessMesh.git
+[submodule "Libraries/ESPAsyncTCP"]
+	path = Libraries/ESPAsyncTCP
+	url = git@github.com:me-no-dev/ESPAsyncTCP.git
+[submodule "Libraries/Adafruit-WS2801-Library"]
+	path = Libraries/Adafruit-WS2801-Library
+	url = git@github.com:adafruit/Adafruit-WS2801-Library.git
+[submodule "Libraries/TaskScheduler"]
+	path = Libraries/TaskScheduler
+	url = git@github.com:arkhipenko/TaskScheduler.git
