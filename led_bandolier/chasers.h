@@ -11,16 +11,21 @@ byte MY_COLORS[][3] = {
 byte NUM_COLORS = 2;
 
 // Input a value 0 to 255 to get a color bytearray [r,g,b].
-// The colours are a transition r - g -b - back to r
 void ChaserWheel(byte WheelPos, byte rgb[]) {
   // Divide the wheel into portions according to how many colors there are.
   byte WHEEL_SLICE_SIZE = 255 / NUM_COLORS;
 
   byte* color = MY_COLORS[WheelPos / WHEEL_SLICE_SIZE];
+  
+  // The color is brightest in the middle of the slice, 0 near the edges.
+  byte brightness = 0;
   char sliceMidpoint = WHEEL_SLICE_SIZE / 2;
   char positionWithinSlice = WheelPos % WHEEL_SLICE_SIZE;
   int offsetFromMidpoint = sliceMidpoint - positionWithinSlice;
-  byte brightness = BRIGHTNESS_BY_OFFSET[abs(offsetFromMidpoint)];
+  byte brightnessIndex = abs(offsetFromMidpoint);
+  if (brightnessIndex < sizeof(BRIGHTNESS_BY_OFFSET)) {
+    brightness = BRIGHTNESS_BY_OFFSET[abs(offsetFromMidpoint)];
+  }
 
   byte r = int(color[0]) * brightness / 255;
   byte g = int(color[1]) * brightness / 255;
