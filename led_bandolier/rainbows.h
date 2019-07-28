@@ -18,7 +18,7 @@ void Wheel(byte WheelPos, byte rgb[]) {
   setRGB(0, WheelPos * 3, 255 - WheelPos * 3, rgb);
 }
 
-void rainbows(AnimationState *state, byte rgb[]) {
+void rainbows(AnimationState *state, byte rgb[3]) {
   // For simplicity, we assume every bandolier has the same number of pixels (50).
   size_t allLedCount = state->ledCount * state->meshCount;
   size_t allLedIndex = state->ledCount * state->meshIndex + state->ledIndex;

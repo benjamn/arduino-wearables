@@ -36,7 +36,7 @@ void ChaserWheel(byte WheelPos, byte rgb[]) {
 
 // Animate some colors that chase each other around the wheel. Each color will
 // have a few bright pixels in the middle and a dimmer halo around it.
-void chasers(AnimationState *state, byte rgb[]) {
+void chasers(AnimationState *state, byte rgb[3]) {
   size_t ledCount = state->ledCount;
   size_t ledIndex = state->ledIndex;
   ChaserWheel(((ledIndex * 256 / ledCount) + state->timeMs / 16) % 256, rgb);

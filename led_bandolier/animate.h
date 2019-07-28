@@ -58,7 +58,7 @@ byte brightnessPulse(uint32_t timeMs) {
   return MAX_BRIGHT * period_t / QTR_PERIOD;
 }
 
-void animate(void (*fn)(AnimationState*, byte[])) {
+void animate(void (*fn)(AnimationState*, byte[3])) {
   unsigned long now = millis();
   // Render frames no more often than every 16ms, which gives a smooth 60fps.
   if (now - lastAnimationTimeMs < frameDelayMs) return;
@@ -86,8 +86,8 @@ void animate(void (*fn)(AnimationState*, byte[])) {
     brightness = brightnessPulse(state.timeMs);
   }
 
+  byte rgb[] = { 0, 0, 0 };
   while (state.ledIndex < state.ledCount) {
-    byte rgb[] = {0,0,0};
     fn(&state, rgb);
     strip.setPixelColor(state.ledIndex, Color(rgb, brightness));
     state.ledIndex += 1;
