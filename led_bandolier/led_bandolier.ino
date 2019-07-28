@@ -6,6 +6,7 @@
 #include "animate.h"
 #include "mesh.h"
 #include "rainbows.h"
+#include "chasers.h"
 
 void setup() {
   Serial.begin(115200);
@@ -32,10 +33,9 @@ void loop() {
       changeDimness();
     }
     digitalWrite(0, HIGH);
-    animate(rainbows);
+    animate(chasers);
     wasPressed = false;
   }
 
   meshLoop();
 }
-

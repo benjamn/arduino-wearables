@@ -28,7 +28,37 @@ size_t computeRank() {
   return rank;
 }
 
-void animate(uint32_t (*fn)(AnimationState*)) {
+// Return a brightness value 0-255 based on the time.
+// Pulse such that we are at full brightness 50% of the time
+// with a linear shifting up and down from that.
+byte brightnessPulse(uint32_t timeMs) {
+  // Repeat pulse every 5 seconds.
+  int PERIOD_MILLIS = 2000;
+  int HALF_PERIOD = PERIOD_MILLIS / 2;
+  int QTR_PERIOD = PERIOD_MILLIS / 4;
+  int period_t = timeMs % PERIOD_MILLIS;
+  
+  if (period_t < QTR_PERIOD) {
+    return MAX_BRIGHT;
+  }
+
+  if (period_t < HALF_PERIOD) {
+    // Ramp down during this period.
+    period_t = period_t - HALF_PERIOD;
+    return MAX_BRIGHT - MAX_BRIGHT * period_t / QTR_PERIOD;
+  }
+
+  if (period_t < HALF_PERIOD + QTR_PERIOD) {
+    // Be dark during this period.
+    return 0;
+  }
+
+  // Ramp up during this period.
+  period_t = period_t - HALF_PERIOD - QTR_PERIOD;
+  return MAX_BRIGHT * period_t / QTR_PERIOD;
+}
+
+void animate(void (*fn)(AnimationState*, byte[])) {
   unsigned long now = millis();
   // Render frames no more often than every 16ms, which gives a smooth 60fps.
   if (now - lastAnimationTimeMs < frameDelayMs) return;
@@ -48,12 +78,20 @@ void animate(uint32_t (*fn)(AnimationState*)) {
     .meshIndex = computeRank()
   };
 
+
+  // Steady glow if we are the only node
+  byte brightness = MAX_BRIGHT;
+  if (otherNodesCount > 0) {
+    // Otherwise pulse the color.
+    brightness = brightnessPulse(state.timeMs);
+  }
+
   while (state.ledIndex < state.ledCount) {
-    strip.setPixelColor(state.ledIndex, fn(&state));
+    byte rgb[] = {0,0,0};
+    fn(&state, rgb);
+    strip.setPixelColor(state.ledIndex, Color(rgb, brightness));
     state.ledIndex += 1;
   }
 
   strip.show();
 }
-
-
