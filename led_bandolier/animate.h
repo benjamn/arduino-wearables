@@ -5,7 +5,7 @@
 #include <list>
 
 typedef struct {
-  uint32_t time;
+  uint32_t timeMs;
   size_t ledCount;
   size_t ledIndex;
   size_t meshCount;
@@ -41,7 +41,7 @@ void animate(uint32_t (*fn)(AnimationState*)) {
     // but we use the synchronized mesh time for time-dependent animations, so all devices
     // connected to the mesh network can agree on the current time, regardless of when
     // they were first turned on.
-    .time = meshTimeMs(),
+    .timeMs = meshTimeMs(),
     .ledCount = strip.numPixels(),
     .ledIndex = 0,
     .meshCount = otherNodesCount + 1,
