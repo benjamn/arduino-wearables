@@ -1,21 +1,18 @@
 #pragma once
-
 #include "animate.h"
 
 //Input a value 0 to 255 to get a color bytearray [r,g,b].
 //The colours are a transition r - g -b - back to r
-void Wheel(byte WheelPos, byte rgb[3]) {
-  if (WheelPos < 85) {
-    setRGB(WheelPos * 3, 255 - WheelPos * 3, 0, rgb);
+void Wheel(byte pos, byte rgb[3]) {
+  if (pos < 85) {
+    setRGB(pos * 3, 255 - pos * 3, 0, rgb);
+  } else if (pos < 170) {
+    pos -= 85;
+    setRGB(255 - pos * 3, 0, pos * 3, rgb);
+  } else {
+    pos -= 170;
+    setRGB(0, pos * 3, 255 - pos * 3, rgb);
   }
-
-  if (WheelPos < 170) {
-    WheelPos -= 85;
-    setRGB(255 - WheelPos * 3, 0, WheelPos * 3, rgb);
-  }
-
-  WheelPos -= 170;
-  setRGB(0, WheelPos * 3, 255 - WheelPos * 3, rgb);
 }
 
 void rainbows(AnimationState *state, byte rgb[3]) {

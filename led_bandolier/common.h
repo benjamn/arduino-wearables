@@ -50,8 +50,8 @@ uint32_t Color(byte rgb[], byte brightness)
 
 void setRGB(byte r, byte g, byte b, byte rgb[]) {
   rgb[0] = r;
-  rgb[1] = b;
-  rgb[2] = g;
+  rgb[1] = g;
+  rgb[2] = b;
 }
 
 void clear() {
