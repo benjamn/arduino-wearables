@@ -11,7 +11,7 @@ Adafruit_WS2801 strip = Adafruit_WS2801(NUM_PIXELS, dataPin, clockPin);
 
 int8_t switchDimnessFactors[] = {
   // disable full brightness
-  // 1, // full brightness
+  1, // full brightness
   2, // half
   8, // eighth
  -1, // off

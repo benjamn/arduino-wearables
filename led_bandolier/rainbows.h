@@ -4,7 +4,7 @@
 
 //Input a value 0 to 255 to get a color bytearray [r,g,b].
 //The colours are a transition r - g -b - back to r
-void Wheel(byte WheelPos, byte rgb[]) {
+void Wheel(byte WheelPos, byte rgb[3]) {
   if (WheelPos < 85) {
     setRGB(WheelPos * 3, 255 - WheelPos * 3, 0, rgb);
   }
