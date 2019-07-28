@@ -1,8 +1,9 @@
 #pragma once
 
+#include <list>
+#include <math.h>
 #include "common.h"
 #include "mesh.h"
-#include <list>
 
 typedef struct {
   uint32_t timeMs;
@@ -32,30 +33,8 @@ size_t computeRank() {
 // Pulse such that we are at full brightness 50% of the time
 // with a linear shifting up and down from that.
 byte brightnessPulse(uint32_t timeMs) {
-  // Repeat pulse every 5 seconds.
-  int PERIOD_MILLIS = 2000;
-  int HALF_PERIOD = PERIOD_MILLIS / 2;
-  int QTR_PERIOD = PERIOD_MILLIS / 4;
-  int period_t = timeMs % PERIOD_MILLIS;
-
-  if (period_t < QTR_PERIOD) {
-    return MAX_BRIGHT;
-  }
-
-  if (period_t < HALF_PERIOD) {
-    // Ramp down during this period.
-    period_t = period_t - HALF_PERIOD;
-    return MAX_BRIGHT - MAX_BRIGHT * period_t / QTR_PERIOD;
-  }
-
-  if (period_t < HALF_PERIOD + QTR_PERIOD) {
-    // Be dark during this period.
-    return 0;
-  }
-
-  // Ramp up during this period.
-  period_t = period_t - HALF_PERIOD - QTR_PERIOD;
-  return MAX_BRIGHT * period_t / QTR_PERIOD;
+  double sinFactor = (sin(3.14159 * timeMs / 1000) + 1.) / 2.;
+  return round(sinFactor * MAX_BRIGHT);
 }
 
 void animate(void (*fn)(AnimationState*, byte[3])) {
