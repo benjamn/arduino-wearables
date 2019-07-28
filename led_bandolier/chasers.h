@@ -39,5 +39,5 @@ void ChaserWheel(byte WheelPos, byte rgb[]) {
 void chasers(AnimationState *state, byte rgb[]) {
   size_t ledCount = state->ledCount;
   size_t ledIndex = state->ledIndex;
-  ChaserWheel(((ledIndex * 256 / ledCount) + state->time) % 256, rgb);
+  ChaserWheel(((ledIndex * 256 / ledCount) + state->timeMs / 16) % 256, rgb);
 }
