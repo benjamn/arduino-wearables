@@ -30,25 +30,38 @@ void setup() {
   meshSetup();
 }
 
-bool isButtonPressed() {
+bool isButtonDepressed() {
   return !digitalRead(inputPin);
 }
 
-bool wasPressed = false;
+bool depressed = false;
+bool shouldChangeDimness = false;
+uint32_t timeOfLastDepressionMs = 0;
 
 void loop() {
-  if (isButtonPressed()) {
+  uint32_t now = millis();
+
+  if (isButtonDepressed()) {
+    if (!depressed) {
+      timeOfLastDepressionMs = now;
+      depressed = true;
+      shouldChangeDimness = true;
+    } else if (now - timeOfLastDepressionMs > 1000) {
+      timeOfLastDepressionMs = now;
+      modeIndex = (modeIndex + 1) % modeCount;
+      shouldChangeDimness = false;
+    }
     digitalWrite(0, LOW);
-    clear();
-    wasPressed = true;
   } else {
-    if (wasPressed) {
+    if (depressed && shouldChangeDimness) {
       changeDimness();
     }
     digitalWrite(0, HIGH);
-    animate(modes[modeIndex]);
-    wasPressed = false;
+    depressed = false;
+    shouldChangeDimness = false;
   }
+
+  animate(modes[modeIndex]);
 
   meshLoop();
 }
