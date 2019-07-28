@@ -37,7 +37,7 @@ byte brightnessPulse(uint32_t timeMs) {
   int HALF_PERIOD = PERIOD_MILLIS / 2;
   int QTR_PERIOD = PERIOD_MILLIS / 4;
   int period_t = timeMs % PERIOD_MILLIS;
-  
+
   if (period_t < QTR_PERIOD) {
     return MAX_BRIGHT;
   }
