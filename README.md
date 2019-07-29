@@ -35,8 +35,8 @@ git submodule update --init --recursive
   - CPU Frequency "80 MHz"
   - Upload Speed: "115200"
 
-6. Click the checkmark button in the upper left corner of the IDE to compile the `led_bandolier` sketch
+8. Click the checkmark button in the upper left corner of the IDE to compile the `led_bandolier` sketch
 
-7. Plug your bandolier in via USB and click the arrow button to upload the compiled code
+9. Plug your bandolier in via USB and click the arrow button to upload the compiled code
 
-8. Rainbows!
+10. Rainbows!
