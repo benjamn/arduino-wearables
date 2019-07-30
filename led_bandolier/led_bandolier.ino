@@ -1,25 +1,10 @@
 #include "Adafruit_WS2801.h"
 #include "SPI.h"
-#include <EEPROM.h>
 
 #include "common.h"
 #include "animate.h"
 #include "mesh.h"
-#include "rainbows.h"
-#include "chasers.h"
-#include "red.h"
-#include "green.h"
-#include "blue.h"
-
-void (*modes[])(AnimationState*, byte[3]) = {
-  rainbows,
-  chasers,
-  solidRed,
-  solidGreen,
-  solidBlue,
-};
-size_t modeCount = sizeof(modes) / sizeof(modes[0]);
-size_t modeIndex = 0;
+#include "modes.h"
 
 void setup() {
   Serial.begin(115200);
@@ -27,6 +12,7 @@ void setup() {
   clear();
   pinMode(0, OUTPUT);
   pinMode(inputPin, INPUT);
+  modeSetup();
   meshSetup();
 }
 
@@ -48,7 +34,7 @@ void loop() {
       shouldChangeDimness = true;
     } else if (now - timeOfLastDepressionMs > 1000) {
       timeOfLastDepressionMs = now;
-      modeIndex = (modeIndex + 1) % modeCount;
+      changeMode();
       shouldChangeDimness = false;
     }
     digitalWrite(0, LOW);
@@ -63,5 +49,6 @@ void loop() {
 
   animate(modes[modeIndex]);
 
+  modeLoop();
   meshLoop();
 }
