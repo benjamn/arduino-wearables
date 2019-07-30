@@ -2,26 +2,22 @@
 
 #include "animate.h"
 #include "modes.h"
+#include "schemes.h"
 
 byte BRIGHTNESS_BY_OFFSET[] = {255, 255, 255, 128, 64, 64};
-byte MY_COLORS[][3] = {
-  {255, 0, 0},
-  {0, 0, 255},
-};
-// TODO: someone better at C could keep this in sync automatically.
-byte NUM_COLORS = 2;
 
 // Input a value 0 to 255 to get a color bytearray [r,g,b].
 void ChaserWheel(byte WheelPos, byte rgb[]) {
+  ColorScheme& scheme = currentScheme();
+  
   // Divide the wheel into portions according to how many colors there are.
-  byte WHEEL_SLICE_SIZE = 255 / NUM_COLORS;
-
-  byte* color = MY_COLORS[WheelPos / WHEEL_SLICE_SIZE];
+  byte wheelSliceSize = 255 / scheme.numColors;
+  byte* color = scheme.colors[WheelPos / wheelSliceSize];
   
   // The color is brightest in the middle of the slice, 0 near the edges.
   byte brightness = 0;
-  char sliceMidpoint = WHEEL_SLICE_SIZE / 2;
-  char positionWithinSlice = WheelPos % WHEEL_SLICE_SIZE;
+  char sliceMidpoint = wheelSliceSize / 2;
+  char positionWithinSlice = WheelPos % wheelSliceSize;
   int offsetFromMidpoint = sliceMidpoint - positionWithinSlice;
   byte brightnessIndex = abs(offsetFromMidpoint);
   if (brightnessIndex < sizeof(BRIGHTNESS_BY_OFFSET)) {
