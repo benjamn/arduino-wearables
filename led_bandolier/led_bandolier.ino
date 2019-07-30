@@ -39,7 +39,9 @@ void loop() {
     }
     digitalWrite(0, LOW);
   } else {
-    if (depressed && shouldChangeBrightness) {
+    if (depressed &&
+        shouldChangeBrightness &&
+        now - timeOfLastDepressionMs < 500) {
       changeBrightness();
     }
     digitalWrite(0, HIGH);
