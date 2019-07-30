@@ -6,6 +6,7 @@
 
 #include "animate.h"
 #include "rainbows.h"
+#include "blended.h"
 #include "chasers.h"
 #include "red.h"
 #include "green.h"
@@ -15,6 +16,7 @@
 void (*modes[])(AnimationState*, byte[3]) = {
   rainbows,
   chasers,
+  blended,
   solidRed,
   solidGreen,
   solidBlue,
@@ -23,6 +25,7 @@ void (*modes[])(AnimationState*, byte[3]) = {
 // Parallel array to the above
 bool modeSupportsSchemes[] = {
   false,
+  true,
   true,
   false,
   false,
