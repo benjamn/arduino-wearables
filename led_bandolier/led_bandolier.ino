@@ -21,7 +21,7 @@ bool isButtonDepressed() {
 }
 
 bool depressed = false;
-bool shouldChangeDimness = false;
+bool shouldChangeBrightness = false;
 uint32_t timeOfLastDepressionMs = 0;
 
 void loop() {
@@ -31,20 +31,20 @@ void loop() {
     if (!depressed) {
       timeOfLastDepressionMs = now;
       depressed = true;
-      shouldChangeDimness = true;
+      shouldChangeBrightness = true;
     } else if (now - timeOfLastDepressionMs > 1000) {
       timeOfLastDepressionMs = now;
       changeMode();
-      shouldChangeDimness = false;
+      shouldChangeBrightness = false;
     }
     digitalWrite(0, LOW);
   } else {
-    if (depressed && shouldChangeDimness) {
-      changeDimness();
+    if (depressed && shouldChangeBrightness) {
+      changeBrightness();
     }
     digitalWrite(0, HIGH);
     depressed = false;
-    shouldChangeDimness = false;
+    shouldChangeBrightness = false;
   }
 
   animate(modes[modeIndex]);

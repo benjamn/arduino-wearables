@@ -9,7 +9,7 @@ const uint8_t inputPin = 14;
 
 Adafruit_WS2801 strip = Adafruit_WS2801(NUM_PIXELS, dataPin, clockPin);
 
-int8_t switchDimnessFactors[] = {
+int8_t switchBrightnessFactors[] = {
   // disable full brightness
   1, // full brightness
   2, // half
@@ -19,19 +19,19 @@ int8_t switchDimnessFactors[] = {
 
 byte MAX_BRIGHT = 255;
 
-size_t dimnessIndex = 0;
-size_t dimnessCount = sizeof(switchDimnessFactors) / sizeof(switchDimnessFactors[0]);
+size_t brightnessIndex = 0;
+size_t brightnessCount = sizeof(switchBrightnessFactors) / sizeof(switchBrightnessFactors[0]);
 
-void changeDimness() {
-  // TODO Turn off the WiFi radio when dimnessFactor is -1.
-  dimnessIndex = (dimnessIndex + 1) % dimnessCount;
+void changeBrightness() {
+  // TODO Turn off the WiFi radio when brightnessFactor is -1.
+  brightnessIndex = (brightnessIndex + 1) % brightnessCount;
 }
 
 // Create a 24 bit color value from R,G,B
 uint32_t Color(byte rgb[], byte brightness)
 {
-  size_t switchDimnessFactor = switchDimnessFactors[dimnessIndex];
-  if (switchDimnessFactor < 0) {
+  size_t switchBrightnessFactor = switchBrightnessFactors[brightnessIndex];
+  if (switchBrightnessFactor < 0) {
     return 0;
   }
 
@@ -40,11 +40,11 @@ uint32_t Color(byte rgb[], byte brightness)
   byte b = rgb[2];
   
   uint32_t c;
-  c = r / switchDimnessFactor * brightness / MAX_BRIGHT;
+  c = r / switchBrightnessFactor * brightness / MAX_BRIGHT;
   c <<= 8;
-  c |= g / switchDimnessFactor * brightness / MAX_BRIGHT;
+  c |= g / switchBrightnessFactor * brightness / MAX_BRIGHT;
   c <<= 8;
-  c |= b / switchDimnessFactor * brightness / MAX_BRIGHT;
+  c |= b / switchBrightnessFactor * brightness / MAX_BRIGHT;
   return c;
 }
 
