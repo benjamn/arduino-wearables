@@ -39,6 +39,11 @@ byte jointCount = schemeCount * modeCount;
 void modeSetup() {
   EEPROM.begin(EEPROM_SIZE);
   byte jointIndex = EEPROM.read(EEPROM_ADDR);
+
+  // xx
+  jointIndex = 0;
+
+  
   if (jointIndex >= jointCount) {
     jointIndex = 0;
   }
