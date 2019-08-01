@@ -39,22 +39,11 @@ byte jointCount = schemeCount * modeCount;
 void modeSetup() {
   EEPROM.begin(EEPROM_SIZE);
   byte jointIndex = EEPROM.read(EEPROM_ADDR);
-  Serial.write("read ji: ");
-  Serial.write(jointIndex);
-  Serial.write("\n");
   if (jointIndex >= jointCount) {
     jointIndex = 0;
   }
   modeIndex = jointIndex / modeCount;
   schemeIndex = jointIndex % modeCount;
-
-  Serial.write("mode: ");
-  Serial.write(modeIndex);
-  Serial.write("\n");
-
-  Serial.write("scheme: ");
-  Serial.write(schemeIndex);
-  Serial.write("\n");
 }
 
 bool needToCommit = false;
@@ -75,8 +64,6 @@ void changeMode() {
   }
 
   byte jointIndex = modeIndex * schemeCount + schemeIndex;
-  Serial.write("writing: ");
-  Serial.write(jointIndex);
   EEPROM.write(EEPROM_ADDR, jointIndex);
   needToCommit = true;
 }
@@ -87,7 +74,6 @@ void modeLoop() {
     if (now - timeOfLastCommit > commitDelayMs) {
       needToCommit = false;
       timeOfLastCommit = now;
-      Serial.write("\ncommit\n");
       EEPROM.commit();
     }
   }
