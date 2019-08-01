@@ -5,6 +5,7 @@
 #include "animate.h"
 #include "mesh.h"
 #include "modes.h"
+#include "schemes.h"
 
 void setup() {
   Serial.begin(115200);
@@ -14,6 +15,7 @@ void setup() {
   pinMode(inputPin, INPUT);
   modeSetup();
   meshSetup();
+  colorSchemesSetup();
 }
 
 bool isButtonDepressed() {

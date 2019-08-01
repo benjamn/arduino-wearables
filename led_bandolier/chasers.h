@@ -4,7 +4,7 @@
 #include "modes.h"
 #include "schemes.h"
 
-byte BRIGHTNESS_BY_OFFSET[] = {255, 255, 255, 128, 64, 64};
+byte BRIGHTNESS_BY_OFFSET[] = {255, 255, 255, 255, 255, 128, 128, 128, 128, 128, 64, 64, 64, 64, 64, 32, 32, 32, 32, 32};
 
 // Input a value 0 to 255 to get a color bytearray [r,g,b].
 void ChaserWheel(byte WheelPos, byte rgb[]) {

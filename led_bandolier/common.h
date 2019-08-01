@@ -55,7 +55,7 @@ void setRGB(byte r, byte g, byte b, byte rgb[]) {
 }
 
 byte weightedAvg(byte a, byte b, byte weight) {
-  return byte((int(a) * (255 - weight) + int(b) * 255 / 255));
+  return byte((int(a) * (255 - weight) + int(b) * weight) / 255);
 }
 
 // return a color that is a blend of the two inputs, weight between 0 (color1) and 255 (color2)
