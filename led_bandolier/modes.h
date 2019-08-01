@@ -42,8 +42,8 @@ void modeSetup() {
   if (jointIndex >= jointCount) {
     jointIndex = 0;
   }
-  modeIndex = jointIndex / modeCount;
-  schemeIndex = jointIndex % modeCount;
+  modeIndex = jointIndex / schemeCount;
+  schemeIndex = jointIndex % schemeCount;
 }
 
 bool needToCommit = false;
