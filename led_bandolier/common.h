@@ -54,6 +54,17 @@ void setRGB(byte r, byte g, byte b, byte rgb[]) {
   rgb[2] = b;
 }
 
+byte weightedAvg(byte a, byte b, byte weight) {
+  return byte((int(a) * (255 - weight) + int(b) * weight) / 255);
+}
+
+// return a color that is a blend of the two inputs, weight between 0 (color1) and 255 (color2)
+void blend(byte color1[], byte color2[], byte weight, byte out[]) {
+  for (int i = 0; i < 3; i++) {
+    out[i] = weightedAvg(color1[i], color2[i], weight);
+  }
+}
+
 void clear() {
   for (int i = 0; i < strip.numPixels(); i++) {
     byte rgb[] = {0, 0, 0};
