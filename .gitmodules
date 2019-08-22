@@ -13,3 +13,6 @@
 [submodule "Libraries/TaskScheduler"]
 	path = Libraries/TaskScheduler
 	url = git@github.com:arkhipenko/TaskScheduler.git
+[submodule "Libraries/SimplexNoise"]
+	path = Libraries/SimplexNoise
+	url = git@github.com:jshaw/SimplexNoise.git

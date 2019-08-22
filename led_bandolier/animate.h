@@ -57,7 +57,6 @@ void animate(void (*fn)(AnimationState*, byte[3])) {
     .meshIndex = computeRank()
   };
 
-
   // Steady glow if we are the only node
   byte brightness = MAX_BRIGHT;
   if (otherNodesCount > 0) {

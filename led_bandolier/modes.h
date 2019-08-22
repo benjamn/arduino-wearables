@@ -12,9 +12,16 @@
 #include "green.h"
 #include "blue.h"
 #include "schemes.h"
+#include "fire.h"
+#include "fireflies.h"
+#include "gyre.h"
+#include "noise.h"
 
 void (*modes[])(AnimationState*, byte[3]) = {
   rainbows,
+  fireflies,
+  gyre,
+  fire,
   blended,
   chasers,
   // solidRed,
@@ -24,6 +31,9 @@ void (*modes[])(AnimationState*, byte[3]) = {
 
 // Parallel array to the above
 bool modeSupportsSchemes[] = {
+  false,
+  false,
+  false,
   false,
   true,
   true,
@@ -44,6 +54,9 @@ void modeSetup() {
   }
   modeIndex = jointIndex / schemeCount;
   schemeIndex = jointIndex % schemeCount;
+
+  fireSetup();
+  noiseSetup();
 }
 
 bool needToCommit = false;
